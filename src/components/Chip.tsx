@@ -1,55 +1,47 @@
-import { Activity, type ButtonHTMLAttributes, type ReactNode } from 'react';
+import { Activity, type HTMLAttributes, type ReactNode } from 'react';
 import { twMerge } from "tailwind-merge";
 import { tv, type VariantProps } from "tailwind-variants";
 import type TypeTV from '../utility/Type';
 
-
 /* 
-    Button component
-    - Renders a customizable button with various variants, colors, and sizes
+    Chip component
+    - Renders a customizable chip with different variants, colors, and sizes
     - Supports start and end icons
     - Disabled state styling
     - Uses tailwind-variants for styling
 */
 
-const ButtonTV = tv({
+const ChipTV = tv({
     base: [
-        "ui_btn",
-        "select-none px-4 py-1 rounded-lg",
+        "ui_chip",
+        "select-none px-4 py-1 rounded-full",
         "trasition-all duration-300 ease-in-out",
-        "hover:cursor-pointer hover:shadow-md",
-        "active:shadow-none active:inset-shadow-sm active:cursor-press",
         "has-[svg]:inline-flex has-[svg]:gap-2 has-[svg]:items-center",
-        "group/badge relative",
     ],
     variants: {
         disabled: {
             true: 'opacity-50 pointer-events-none'
         },
         variant: {
-            text: "text-lg bg-transparent",
             contained: "border-none",
             outlined: "border bg-transparent",
         },
         color: {
-            primary: ["bg-primary text-white", "hover:bg-primary-dark", 'active:inset-shadow-primary-light'],
-            secondary: ["bg-secondary text-white", "hover:bg-secondary-dark", 'active:inset-shadow-secondary-dark'],
-            success: ["bg-green-500 text-white", "hover:bg-green-600", 'active:inset-shadow-green-700'],
-            error: ["bg-red-500 text-white", "hover:bg-red-600", 'active:inset-shadow-red-700'],
-            info: ["bg-sky-500 text-white", "hover:bg-sky-600", 'active:inset-shadow-sky-700'],
-            warning: ["bg-yellow-500 text-white", "hover:bg-yellow-600", 'active:inset-shadow-yellow-700'],
+            primary: ["bg-primary text-white"],
+            secondary: ["bg-secondary text-white"],
+            error: ["bg-red-500 text-white"],
+            warning: ["bg-yellow-500 text-white"],
+            success: ["bg-green-500 text-white"],
+            info: ["bg-sky-500 text-white"],
+            inherit: ["bg-gray-500 text-white"],
         },
         size: {
             small: [
-                "py-0.75 px-2.25 font-medium text-[13px] leading-[1.75] h-fit",
+                "px-3 font-medium text-[13px] leading-[1.75] h-fit",
                 "[&_svg]:size-5",
             ],
             medium: [
-                "py-1.25 px-3.75 font-medium text-[14px] leading-[1.75] h-fit",
-                "[&_svg]:size-6",
-            ],
-            large: [
-                "py-1.75 px-5.25 font-medium text-[15px] leading-[1.75] h-fit",
+                "px-4 font-medium text-[14px] leading-[1.75] h-fit",
                 "[&_svg]:size-6",
             ],
         },
@@ -57,16 +49,10 @@ const ButtonTV = tv({
     defaultVariants: {
         disabled: false,
         size: 'medium',
-        variant: 'text',
-        color: 'primary',
+        variant: 'outlined',
+        color: 'inherit',
     },
     compoundVariants: [
-        {
-            disabled: true,
-            variant: 'text',
-            color: ['primary', 'secondary', 'success', 'error', 'info', 'warning'],
-            class: 'bg-transparent text-gray-500'
-        },
         {
             disabled: true,
             variant: 'contained',
@@ -78,44 +64,6 @@ const ButtonTV = tv({
             variant: 'outlined',
             color: ['primary', 'secondary', 'success', 'error', 'info', 'warning'],
             class: 'bg-transparent text-gray-500 border-gray-500'
-        },
-
-
-        {
-            disabled: false,
-            variant: 'text',
-            color: 'primary',
-            class: ['bg-transparent text-primary', 'hover:bg-primary-light/10']
-        },
-        {
-            disabled: false,
-            variant: 'text',
-            color: 'secondary',
-            class: ['bg-transparent text-secondary', 'hover:bg-secondary-light/10']
-        },
-        {
-            disabled: false,
-            variant: 'text',
-            color: 'success',
-            class: ['bg-transparent text-green-500', 'hover:bg-green-50/40']
-        },
-        {
-            disabled: false,
-            variant: 'text',
-            color: 'error',
-            class: ['bg-transparent text-red-500', 'hover:bg-red-50/40']
-        },
-        {
-            disabled: false,
-            variant: 'text',
-            color: 'info',
-            class: ['bg-transparent text-sky-500', 'hover:bg-sky-50/40']
-        },
-        {
-            disabled: false,
-            variant: 'text',
-            color: 'warning',
-            class: ['bg-transparent text-yellow-500', 'hover:bg-yellow-50/40']
         },
 
         {
@@ -157,20 +105,21 @@ const ButtonTV = tv({
     ]
 });
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<typeof ButtonTV> & {
+type ChipProps = HTMLAttributes<HTMLSpanElement> & VariantProps<typeof ChipTV> & {
+    label?: ReactNode;
     startIcon?: ReactNode;
     endIcon?: ReactNode;
     color?: TypeTV['color'];
 };
 
-export default function Button(
-    { disabled = false, variant = "text", color = "primary", size = "medium", className = '', children,
-        startIcon = null, endIcon = null,
-        ...props }: ButtonProps) {
+export default function Chip(
+    { disabled = false, variant = "outlined", color = "inherit", size = "medium", className = '',
+        label = null, startIcon = null, endIcon = null,
+        ...props }: ChipProps) {
 
     return (
-        <button
-            className={twMerge(ButtonTV({ disabled, variant, color, size }), className)}
+        <span
+            className={twMerge(ChipTV({ disabled, variant, color, size }), className)}
             {...props}
         >
             <Activity mode={startIcon !== null ? 'visible' : 'hidden'}>
@@ -180,17 +129,17 @@ export default function Button(
             </Activity>
             <Activity mode={startIcon !== null || endIcon !== null ? 'visible' : 'hidden'}>
                 <span>
-                    {children}
+                    {label}
                 </span>
             </Activity>
             <Activity mode={startIcon === null && endIcon === null ? 'visible' : 'hidden'}>
-                <>{children}</>
+                <>{label}</>
             </Activity>
             <Activity mode={endIcon !== null ? 'visible' : 'hidden'}>
                 <span>
                     {endIcon}
                 </span>
             </Activity>
-        </button>
+        </span>
     );
 }

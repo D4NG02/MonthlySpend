@@ -1,17 +1,18 @@
 import { Activity, type HTMLAttributes, type ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 import { tv, type VariantProps } from "tailwind-variants";
-
+import type TypeTV from "../utility/Type";
 
 /* 
-Badge component
-
-showZero -> Controls whether the badge is hidden when content is zero.
-variant -> The variant to use. 'dot' or 'standard'.
-color -> The color to use.
+    Badge component
+    - Renders a badge with different variants and colors
+    - Supports dot and standard variants
+    - Can display badge content with a maximum limit
+    - Handles visibility of the badge
 */
+
 const BadgeTV = tv({
-    base: ["ui-badge inline-flex", "text-xs",
+    base: ["ui_badge inline-flex", "text-xs",
         "[&_svg]:size-6 [&_svg]:stroke-neutral-500",
         "[&_span]:rounded-full",
         "relative [&_span]:absolute [&_span]:top-0 [&_span]:right-0",
@@ -48,6 +49,7 @@ type BadgeProps = HTMLAttributes<HTMLSpanElement> & VariantProps<typeof BadgeTV>
     invisible?: boolean;
     showZero?: boolean;
     badgeContent?: ReactNode;
+    color?: TypeTV['color'];
 };
 
 export default function Badge(

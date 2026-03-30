@@ -1,15 +1,24 @@
 import { type ButtonHTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 import { tv, type VariantProps } from "tailwind-variants";
+import type TypeTV from "../utility/Type";
+
+
+/* 
+    ButtonIcon component
+    - Renders a customizable button icon with various colors and sizes
+    - Supports disabled state styling
+    - Uses tailwind-variants for styling
+*/
 
 const ButtonIconTV = tv({
     base: [
-        "ui-btn-icon",
+        "ui_btn-icon",
         "p-1.5 rounded-full",
         "trasition-all duration-200 ease-in-out",
         "hover:cursor-pointer hover:shadow-lg",
         "active:shadow-none active:inset-shadow-sm ",
-        "has-[.ui-badge]:relative [&_.ui-badge]:absolute [&_.ui-badge]:top-0.5 [&_.ui-badge]:right-0.5",
+        "has-[.ui_badge]:relative [&_.ui_badge]:absolute [&_.ui_badge]:top-0.5 [&_.ui_badge]:right-0.5",
         "[&_svg]:stroke-neutral-500"
     ],
     variants: {
@@ -67,7 +76,9 @@ const ButtonIconTV = tv({
     ]
 });
 
-type ButtonIconProps = ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<typeof ButtonIconTV>;
+type ButtonIconProps = ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<typeof ButtonIconTV> & {
+    color?: TypeTV['color'];
+};
 
 export default function ButtonIcon(
     { color = "text", size = "medium", className = '', children,

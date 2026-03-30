@@ -3,8 +3,15 @@ import { type HTMLAttributes } from "react";
 import { twMerge } from "tailwind-merge";
 import { tv, type VariantProps } from "tailwind-variants";
 
+/* 
+    Typography component
+    - Renders text with different HTML tags and styles based on the variant prop
+    - Supports variants like h1, h2, h3, h4, h5, h6, body1
+    - Each variant maps to a specific HTML tag and Tailwind CSS classes
+*/
+
 const TypographyTV = tv({
-    base: "select-none text-neutral-800",
+    base: "ui_typography select-none text-neutral-800",
     variants: {
         variant: {
             h1: "font-light text-8xl leading-[1.17] tracking-[-1.5px]",

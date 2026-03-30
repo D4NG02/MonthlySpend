@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+    --color-primary-light: var(--color-blue-300);
+    --color-primary: var(--color-blue-500);
+    --color-primary-dark: var(--color-blue-700);
+    --color-secondary-light: var(--color-fuchsia-300);
+    --color-secondary: var(--color-fuchsia-500);
+    --color-secondary-dark: var(--color-fuchsia-700);
+}
+
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    text-align: justify;
+}
